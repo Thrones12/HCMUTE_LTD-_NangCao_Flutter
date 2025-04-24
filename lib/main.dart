@@ -1,7 +1,12 @@
-import 'dart:developer';
-
+import 'package:btcn_ltdd/screens/verify.dart';
+import 'package:btcn_ltdd/screens/verify_password.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'screens/login.dart';
+import 'screens/register.dart';
+import 'screens/forgot_password.dart';
+import 'screens/home.dart';
+import 'widgets/auth_wrapper.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,8 +20,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Team Manager App',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: IntroPage(),
-      routes: {'/login': (context) => LoginPage()},
+      home: const IntroPage(),
+      routes: {
+        '/login': (context) => const AuthWrapper(child: LoginScreen()),
+        '/register': (context) => const AuthWrapper(child: RegisterScreen()),
+        '/forgot-password':
+            (context) => const AuthWrapper(child: ForgotPasswordScreen()),
+        '/verify': (context) => const VerifyScreen(),
+        '/verify-password': (context) => const VerifyPasswordScreen(),
+        '/home': (context) => const AuthWrapper(child: HomeScreen()),
+      },
     );
   }
 }
@@ -24,6 +37,7 @@ class MyApp extends StatelessWidget {
 // Trang 1: Giới thiệu nhóm
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
+
   @override
   _IntroPageState createState() => _IntroPageState();
 }
@@ -33,7 +47,7 @@ class _IntroPageState extends State<IntroPage> {
   void initState() {
     super.initState();
     // Sau 10s thì chuyển sang trang Login
-    Timer(Duration(seconds: 10), () {
+    Timer(const Duration(seconds: 1), () {
       Navigator.pushReplacementNamed(context, '/login');
     });
   }
@@ -46,52 +60,19 @@ class _IntroPageState extends State<IntroPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Nhóm 18',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
-            Text('- Phạm Hùng Phong - 21110273'),
-            Text('- Nguyễn Anh Hào - 21110823'),
-            SizedBox(height: 30),
-            CircularProgressIndicator(),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 20),
+            const Text('- Phạm Hùng Phong - 21110273'),
+            const Text('- Nguyễn Anh Hào - 21110823'),
+            const SizedBox(height: 30),
+            const CircularProgressIndicator(),
+            const SizedBox(height: 10),
+            const Text(
               'Chuyển trang trong 10s',
               style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// Trang 2: Login dành cho Manager
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Đăng nhập - Manager')),
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('ĐĂNG NHẬP', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 20),
-            TextField(decoration: InputDecoration(labelText: 'Tên đăng nhập')),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(labelText: 'Mật khẩu'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                print("Đăng nhập nè");
-              },
-              child: Text('Đăng nhập'),
             ),
           ],
         ),
